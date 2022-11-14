@@ -190,7 +190,6 @@ void MassSpringSystemSimulator::notifyCaseChanged(int testCase)
 	{
 	case 0:
 		cout << "Euler was used\n";
-		
 		break;
 	case 1:
 		cout << "Leapfrog was used\n";
@@ -349,6 +348,7 @@ void MassSpringSystemSimulator::eulerMethodIntergration(float timeStep) {
 
 		pointArr[springArr[i].p1].Force += -m_fStiffness * (length - springArr[i].initialLength) * dist_norm;
 		pointArr[springArr[i].p2].Force += -1 * pointArr[springArr[i].p1].Force;
+		printResults(i);
 	}
 
 	for (int i = 0; i < getNumberOfMassPoints(); i++) {
@@ -397,6 +397,7 @@ void MassSpringSystemSimulator::midPointMethodIntergration(float timeStep)
 
 		pointArr[springArr[i].p1].Force += -m_fStiffness * (length - springArr[i].initialLength) * dist_norm;
 		pointArr[springArr[i].p2].Force += -1 * pointArr[springArr[i].p1].Force;
+		printResults(i);
 	}
 
 
@@ -417,13 +418,25 @@ void MassSpringSystemSimulator::printResults(int springIndex)
 	std::cout << "\nSpring #" << springIndex << std::endl;
 	std::cout << std::fixed;
 	std::cout << std::setprecision(4);
-	Vec3dToString(pointArr[springArr[springIndex].p1].Position, "Position p1");
-	Vec3dToString(pointArr[springArr[springIndex].p2].Position, "Position p2");
-	Vec3dToString(pointArr[springArr[springIndex].p1].Velocity, "Velocity p1");
-	Vec3dToString(pointArr[springArr[springIndex].p2].Velocity, "Velocity p2");
+	Vec3 p1 = pointArr[springArr[springIndex].p1].Position;
+	Vec3 p2 = pointArr[springArr[springIndex].p2].Position;
+	Vec3 v1 = pointArr[springArr[springIndex].p1].Velocity;
+	Vec3 v2 = pointArr[springArr[springIndex].p2].Velocity;
+	Vec3 f1 = pointArr[springArr[springIndex].p1].Force;
+	Vec3 f2 = pointArr[springArr[springIndex].p2].Force;
+	//Vec3dToString(pointArr[springArr[springIndex].p1].Position, "Position p1");
+	//Vec3dToString(pointArr[springArr[springIndex].p2].Position, "Position p2");
+	//Vec3dToString(pointArr[springArr[springIndex].p1].Velocity, "Velocity p1");
+	//Vec3dToString(pointArr[springArr[springIndex].p2].Velocity, "Velocity p2");
 
-	std::cout << (pointArr[springArr[springIndex].p2].Velocity, "Velocity p2") << std::endl;
-	std::cout << (pointArr[springArr[springIndex].p1].Position, "Position p1") << std::endl;
+	//std::cout << (pointArr[springArr[springIndex].p2].Velocity, "Velocity p2") << std::endl;
+	//std::cout << (pointArr[springArr[springIndex].p1].Position, "Position p1") << std::endl;
+	std::cout << "Position p1 " << p1.x << " " << p1.y << " " << p1.z << " " << std::endl;
+	std::cout << "Position p2 " << p2.x << " " << p2.y << " " << p2.z << " " << std::endl;
+	std::cout << "Velocity p1 " << v1.x << " " << v1.y << " " << v1.z << " " << std::endl;
+	std::cout << "Velocity p2 " << v2.x << " " << v2.y << " " << v2.z << " " << std::endl;
+	std::cout << "Force p1 " << f1.x << " " << f1.y << " " << f1.z << " " << std::endl;
+	std::cout << "Force p2 " << f2.x << " " << f2.y << " " << f2.z << " " << std::endl;
 
 
 }
