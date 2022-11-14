@@ -177,7 +177,6 @@ void MassSpringSystemSimulator::Demo3() {
 * This function sets up the system to be a mass - spring system with 10 points
 */
 void MassSpringSystemSimulator::Demo4() {
-	setIntegrator(LEAPFROG);
 	setupTenPoints();
 	//setupCubelike();
 }
