@@ -29,6 +29,8 @@ public:
 		Acceleration = ZERO;
 	}
 
+	std::vector<Point> m_point;
+
 };
 
 class Spring {
@@ -72,6 +74,9 @@ public:
 	void applyExternalForce(Vec3 force);
 	void eulerMethodIntergration(float timeStep);
 	void midPointMethodIntergration(float timeStep);
+	void leapFrogMethodIntegration(double h);
+	//void calculateHookesLaw();
+	//void halfEuler(double h, std::vector<Vec3>& oldPosArr, std::vector<Vec3>& oldVelArr);
 	void printResults(int springIndex);
 	void drawPoints();
 	void checkCollison();
@@ -80,6 +85,10 @@ public:
 	void setIntegrator(int integrator) {
 		m_iIntegrator = integrator;
 	}
+
+	//void calculateHookesLaw(Point massPoint1, Point massPoint2, Vec3 dist, Vec3 dist_norm, float length);
+
+
 
 private:
 	// Data Attributes
