@@ -29,8 +29,6 @@ public:
 		Acceleration = ZERO;
 	}
 
-	std::vector<Point> m_point;
-
 };
 
 class Spring {
@@ -52,6 +50,7 @@ public:
 
 	// UI Functions
 	const char* getTestCasesStr();
+	const char* getIntegratorsStr();
 	void initUI(DrawingUtilitiesClass* DUC);
 	void reset();
 	void drawFrame(ID3D11DeviceContext* pd3dImmediateContext);
@@ -74,21 +73,16 @@ public:
 	void applyExternalForce(Vec3 force);
 	void eulerMethodIntergration(float timeStep);
 	void midPointMethodIntergration(float timeStep);
-	void leapFrogMethodIntegration(double h);
-	//void calculateHookesLaw();
-	//void halfEuler(double h, std::vector<Vec3>& oldPosArr, std::vector<Vec3>& oldVelArr);
+	void setupLeapFrogMethod();
+	void leapfrogMethodIntegration(float timeStep);
 	void printResults(int springIndex);
 	void drawPoints();
-	void checkCollison();
+	Vec3 getCollisonAcceleration(int index, float timeStep);
 
 	// Do Not Change
 	void setIntegrator(int integrator) {
 		m_iIntegrator = integrator;
 	}
-
-	//void calculateHookesLaw(Point massPoint1, Point massPoint2, Vec3 dist, Vec3 dist_norm, float length);
-
-
 
 private:
 	// Data Attributes
@@ -98,15 +92,21 @@ private:
 	float m_fStiffness;
 	float m_fDamping;
 	int m_iIntegrator;
-	// UI Attributesprint3dVec
-	Vec3 m_externalForce;
-	Point2D m_mouse;
-	Point2D m_trackmouse;
-	Point2D m_oldtrackmouse;
+	int m_iOldIntegrator = -1;
 	int   m_iNumPoints;
 	float m_fPointSize;
 	int   m_iNumSprings;
 	bool m_bGravity = false;
+	int m_iexternalForceLifetime = 10;
+	int m_iCurrentDemo = -1;
+	float m_fLastTimeStep = 0.001f;			//defined in main.cpp 
+	bool m_bLeapFrogIsSetup = false;
+	// UI Attributes
+	Vec3 m_externalForce;
+	Point2D m_mouse;
+	Point2D m_trackmouse;
+	Point2D m_oldtrackmouse;
+	Point* selectedPoint;
 	// functions
 	void setupTwoPoints();
 	void Demo1();
@@ -114,5 +114,6 @@ private:
 	void Demo3();
 	void setupTenPoints();
 	void Demo4();
+	void setupCubelike();
 };
 #endif
